@@ -7,10 +7,7 @@ var Restaurants = require('../models/restaurants');
 
 /* GET restaurants listing. */
 router.get('/', function(req, res, next) {
-  Restaurants.find({}).limit(10).exec().then((data) => {
-  	console.log(data);
-  	res.render('restaurants/index', {Restaurants});
-  });
+  res.render('restaurant/index', {});
 });
 
 module.exports = router;
