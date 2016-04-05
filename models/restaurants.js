@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const RestaurantsSchema = new mongoose.Schema({
-      _id: { type : Schema.ObjectId },
       adress: [{
          coord: [],
          street: { type : String, default : '', trim : true },
