@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title} !! 
+  ul
+    each data in datas
+      li
+        span
+          =data.name 
+        span
+          =data.cuisine
+        span 
+          =data.grades[]
