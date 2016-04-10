@@ -4,9 +4,9 @@ block content
   ul
     each data in datas
       li
-        span
-          =data.name 
+        a(href='/restaurants/view/#{data.restaurant_id}')
+          span
+            =data.name 
         span
           =data.cuisine
-        span 
-          =data.grades[]
+       

@@ -8,7 +8,7 @@ var Restaurants = require('../models/restaurants');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  Restaurants.find({}).limit(10).exec().then((datas) => {
+  Restaurants.find({"name": {"$ne": ""}}).limit(10).sort("grades.score").exec().then((datas) => {
   	console.log(datas);
   	res.render('index', {datas});
   });

@@ -1,4 +1,9 @@
 extends ../layout
 
 block content
-  div Content here...
+  div 
+    ul 
+      each data in datas
+        li=data.name
+
+    
