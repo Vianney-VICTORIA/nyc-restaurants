@@ -4,6 +4,7 @@ block content
   div 
     ul 
       each data in datas
-        li=data.name
+        a(href='/restaurants/view/#{data.restaurant_id}')
+          li=data.name
 
     

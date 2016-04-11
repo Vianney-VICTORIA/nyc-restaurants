@@ -5,8 +5,11 @@ block content
     each data in datas
       li
         a(href='/restaurants/view/#{data.restaurant_id}')
-          span
+          div
             =data.name 
-        span
-          =data.cuisine
+          div
+            =data.cuisine
+          div 
+            =data.grades.score
+
        
