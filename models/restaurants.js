@@ -21,4 +21,18 @@ const RestaurantsSchema = new mongoose.Schema({
 });
 
 
+RestaurantsSchema.statics.findRestaurant = function() {
+   return this.find({"name": {"$ne": ""}}).limit(10).sort({name: 1});
+};
+
+RestaurantsSchema.statics.byBorough = function() {
+   return this.aggregate([{$group: { _id: "$borough"}}]);
+};
+   
+RestaurantsSchema.statics.byCuisine = function() {
+   return this.aggregate([{$group: { _id: "$cuisine"}}]);
+};
+
+
 module.exports = mongoose.model('Restaurant', RestaurantsSchema);
+

@@ -2,17 +2,20 @@ var express = require('express');
 var router = express.Router();
 var Restaurants = require('../models/restaurants');
 var app = express();
-var Restaurant = new Restaurants;
 
-Restaurant.findRestaurant = function() {
-	return this.model('Restaurant').find({"name": {"$ne": ""}}).limit(10).sort({name: 1});
-};
-	
 router.get('/', function(req, res, next) {
-  Restaurant.findRestaurant().exec()
- 
-  .then((datas) => {
-  	res.render('restaurants/index', {datas: datas});
+  var restaurants;
+  var boroughs;
+  var cuisines;
+  Restaurants.findRestaurant().exec().then((results) => {
+  	restaurants = results
+  	return Restaurants.byBorough().exec();
+  }).then((results) => {
+  	boroughs = results;
+  	return Restaurants.byCuisine().exec();
+  }).then((results) => {
+  	cuisines = results;
+  	res.render('restaurants/index', {restaurants, boroughs, cuisines});
   });
 });
 
