@@ -7,14 +7,16 @@ router.get('/', function(req, res, next) {
   var restaurants;
   var boroughs;
   var cuisines;
-  Restaurants.findRestaurant().exec().then((results) => {
-  	restaurants = results
+  Restaurants.findRestaurant(borough, cuisine).exec().then((results) => {
+  	restaurants = results;
   	return Restaurants.byBorough().exec();
   }).then((results) => {
   	boroughs = results;
+  	console.log(boroughs);
   	return Restaurants.byCuisine().exec();
   }).then((results) => {
   	cuisines = results;
+  	console.log(cuisines);
   	res.render('restaurants/index', {restaurants, boroughs, cuisines});
   });
 });
