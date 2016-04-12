@@ -2,13 +2,14 @@ extends ../layout
 
 block content
   div 
-    select 
+    form(method="get", action="/restaurants")
+    select(name="borough")
       each borough in boroughs
-        option=borough
-  div 
-    select 
-      echo cuisine in cuisines
-        option=cuisine
+        option=borough._id 
+    select(name="cuisine")
+      each cuisine in cuisines
+        option=cuisine._id
+    button(type="submit")
   div 
     ul 
       each restaurant in restaurants

@@ -21,8 +21,11 @@ const RestaurantsSchema = new mongoose.Schema({
 });
 
 
-RestaurantsSchema.statics.findRestaurant = function() {
-   return this.find({"name": {"$ne": ""}}).limit(10).sort({name: 1});
+RestaurantsSchema.statics.findRestaurant = function(cuisine = null, borough = null) {
+   var query = { name: {"$ne": ""} };
+      if(cuisine) query.cuisine = cuisine;
+      if(borough) query.borough = borough;
+   return this.find(query).limit(10).sort({name: 1});
 };
 
 RestaurantsSchema.statics.byBorough = function() {
