@@ -3,5 +3,20 @@ html
   head
     title= title
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    link(rel='stylesheet', href='stylesheets/style.css')
   body
+  .container-navbar
+      // Static navbar
+      .navbar.navbar-default(role='navigation')
+        .container-fluid
+          .navbar-collapse.collapse
+            img(src="images/QuickRest-horizontale.png").logo
+            ul.nav.navbar-nav
+              li.active
+                a(href='#') Home
+              li
+                a(href='#') Restaurant
+          // /.nav-collapse
+        // /.container-fluid
+      // Main component for a primary marketing message or call to action
     block content

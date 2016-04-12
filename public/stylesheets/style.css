@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,6 +6,110 @@ a {
   color: #00B7FF;
 }
 
-p {
-  color: #00B7FF;
+.container-navbar {
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    z-index: 1000;
+}
+
+.logo {
+    width: 150px;
+    float: left;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.navbar {
+    margin-bottom: 0px
+}
+
+h4 {
+    margin-top: 0px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+
+.content {
+    position: relative;
+    display: inline-block;
+    width: 600px;
+    margin: 60px;
+    padding: 20px;
+    background: white;
+    -moz-box-shadow: 0 0 20px black;
+    -webkit-box-shadow: 0 0 20px black;
+    box-shadow: 0 0 20px black;
+    height: 500px;
+    z-index: 11;
+    opacity: .9;
+}
+
+.li-restaurants {
+    list-style: none;
+    display: inline-block;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.span-restaurants {
+    margin-left: 40px;
+    padding:10px;
+    width:50px;
+}
+
+.title {
+    margin-top: 100px;
+    position: relative;
+    z-index: 11;
+}
+
+.welcome {
+    text-align: center;
+    color:white;
+}
+
+.navbar-default {
+    background-color: white;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+img.bg {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+  overlay:black;
+	
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+	
+  /* Set up positioning */
+  position: fixed;
+  top: 52px;
+  left: 0;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+  img.bg {
+    left: 50%;
+    margin-left: -512px;   /* 50% */
+  }
 }

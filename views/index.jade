@@ -1,15 +1,24 @@
 extends layout
 
-block content
-  ul
-    each data in datas
-      li
-        a(href='/restaurants/view/#{data.restaurant_id}')
-          div
-            =data.name 
-          div
-            =data.cuisine
-          div 
-            =data.grades.score
-
+block content 
+    div.overlay 
+    
+    div.background
+       img(src="images/background.gif").bg
        
+    div.title 
+        h1
+            p.welcome Bienvenue sur QuickRest  
+              
+    div.content
+      h4
+        p The top 10 of our restaurants
+      ul
+        each data in datas
+          li.li-restaurants
+            p.list-restaurants
+              =data.name 
+            p.list-restaurants
+              =data.cuisine
+            p.list-restaurants
+              =data.grades
