@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var restaurants = require('./routes/restaurants');
-var restaurant = require('./routes/restaurant');
 var bodyParser = require('body-parser');
 var filter = require('content-filter');
 var app = express();

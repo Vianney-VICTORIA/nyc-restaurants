@@ -9,9 +9,18 @@ Restaurant.findRestaurant = function() {
 };
 	
 router.get('/', function(req, res, next) {
-  Restaurant.findRestaurant().exec().then((datas) => {
+  Restaurant.findRestaurant().exec()
+ 
+  .then((datas) => {
   	res.render('restaurants/index', {datas: datas});
   });
 });
+
+router.get('/view/:id', function(req, res) {
+	var id = req.params.id;
+	console.log(id);
+	res.render('restaurant/index', {});
+});
+
 
 module.exports = router;
