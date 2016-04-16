@@ -7,25 +7,28 @@ router.get('/', function(req, res, next) {
   var restaurants;
   var boroughs;
   var cuisines;
-  Restaurants.findRestaurant(borough, cuisine).exec().then((results) => {
-  	restaurants = results;
-  	return Restaurants.byBorough().exec();
+  var boroughFilter = req.query.borough;
+  var cuisineFilter = req.query.cuisine;
+  Restaurants.findRestaurant(boroughFilter, cuisineFilter)
+    .exec().then((results, boroughFilter, cuisineFilter) => {
+    	restaurants = results;
+      boroughFilter = req.query.borough;
+      cuisineFilter = req.query.cuisine;
+    	return Restaurants.byBorough().exec();
   }).then((results) => {
   	boroughs = results;
-  	console.log(boroughs);
   	return Restaurants.byCuisine().exec();
   }).then((results) => {
   	cuisines = results;
-  	console.log(cuisines);
-  	res.render('restaurants/index', {restaurants, boroughs, cuisines});
+  	res.render('restaurants/index', {restaurants, boroughs, cuisines, boroughFilter, cuisineFilter});
   });
 });
-
+  
 router.get('/view/:id', function(req, res) {
 	var id = req.params.id;
-	console.log(id);
-	res.render('restaurant/index', {});
+  Restaurants.findOne({"restaurant_id": id}).exec().then((restaurant) => {
+    res.render('restaurant/index', {restaurant});
+  });
 });
-
 
 module.exports = router;

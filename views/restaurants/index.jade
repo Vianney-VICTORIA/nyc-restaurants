@@ -1,19 +1,26 @@
 extends ../layout
 
 block content
-  div 
+
+  div.restaurant
     form(method="get", action="/restaurants")
-    select(name="borough")
-      each borough in boroughs
-        option=borough._id 
-    select(name="cuisine")
-      each cuisine in cuisines
-        option=cuisine._id
-    button(type="submit")
+
+      select(name="borough")
+        option(value='') All
+        each borough in boroughs 
+          option=borough._id
+
+      select(name="cuisine")
+        option(value='') All
+        each cuisine in cuisines
+          option=cuisine._id
+
+      button(type="submit") Envoyer
+
   div 
     ul 
       each restaurant in restaurants
         a(href='/restaurants/view/#{restaurant.restaurant_id}')
-          li=restaurant.name
+          li=restaurant.name 
 
     

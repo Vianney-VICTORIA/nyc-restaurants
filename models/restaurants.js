@@ -7,25 +7,31 @@ const RestaurantsSchema = new mongoose.Schema({
          zipcode: { type : String, default : '', trim : true },
       }],
       comments: [{
+         name: { type : String, default : '', trim : true },
          text: { type : String, default : '', trim : true },
+         date: { type : Date, default : Date.now },
       }],
       borough: { type : String, default : '', trim : true },
       cuisine: { type : String, default : '', trim : true },
-      grades: [{
+      grades: {
          date: { type : Date, default : Date.now },
          grade: { type : String, default : '', trim : true },
-         score: { type : Number, default : '' }
-      }],
+         score: { type : Number, default : '' },
+      },
       name: { type : String, default : '', trim : true },
       restaurant_id: { type : String, default : '', trim : true },
 });
 
 
-RestaurantsSchema.statics.findRestaurant = function(cuisine = null, borough = null) {
-   var query = { name: {"$ne": ""} };
-      if(cuisine) query.cuisine = cuisine;
-      if(borough) query.borough = borough;
-   return this.find(query).limit(10).sort({name: 1});
+RestaurantsSchema.statics.findRestaurant = function(boroughFilter, cuisineFilter) {
+
+   query = {"name": {"$ne": ""}};
+
+   if (cuisineFilter) query = {"name": {"$ne": ""}, "cuisine": cuisineFilter};
+   if (boroughFilter) query = {"name": {"$ne": ""}, "borough": boroughFilter};
+   if (boroughFilter && cuisineFilter) query = {"name": {"$ne": ""}, "borough": boroughFilter, "cuisine": cuisineFilter};
+
+   return this.find(query).limit(100).sort({name: 1});
 };
 
 RestaurantsSchema.statics.byBorough = function() {
