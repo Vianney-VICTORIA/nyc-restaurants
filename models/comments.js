@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-const CommentsSchema = new mongoose.Schema({    
-      content: [{
-         author: { type : String, default : '', trim : true },
-         text: { type : String, default : '', trim : true },
-         date: { type : Date, default : Date.now },
-      }],
-      id_restaurant: { type : String, default : '', trim : true },
+
+const CommentsSchema = new mongoose.Schema({
+  author: { type : String, default : '', trim : true },
+  body:   { type : String, default : '', trim : true },
+  createdDate: { type: Date, default: Date.now },
+  restaurant: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }
 });
 
-module.exports = mongoose.model('Comment', CommentsSchema);
+module.exports = mongoose.model('Comments', CommentsSchema);

@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const RestaurantsSchema = new mongoose.Schema({
-      address: [{
-         coord: [
-           { type: Number, default: ''},
-           { type: Number, default: '' }
-         ],
+      address: {
+         coord: [],
          street: { type : String, default : '', trim : true },
          zipcode: { type : String, default : '', trim : true },
-      }],
+      },
+      comments : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comments' }],
       borough: { type : String, default : '', trim : true },
       cuisine: { type : String, default : '', trim : true },
       grades: [{
@@ -36,11 +34,18 @@ RestaurantsSchema.statics.findRestaurant = function(thisPage, boroughFilter, cui
 RestaurantsSchema.statics.byBorough = function() {
    return this.aggregate([{$group: { _id: "$borough"}}]);
 };
-   
+
 RestaurantsSchema.statics.byCuisine = function() {
    return this.aggregate([{$group: { _id: "$cuisine"}}]);
 };
 
+RestaurantsSchema.statics.avgScore = function() {
+   return this.aggregate([
+                             { $unwind : "$grades"},
+                             { $group : { restaurants_id  : '$name', average : { $avg : '$grades.score' } } }
+                          ]);
+};
+
+
 
 module.exports = mongoose.model('Restaurant', RestaurantsSchema);
-

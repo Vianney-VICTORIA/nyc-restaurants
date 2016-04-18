@@ -1,19 +1,24 @@
 extends ../layout
 
 block content
-  h3=restaurant.name
-  for place in restaurant.address
-    p #{restaurant.restaurant_id}, #{place.street}
-    p #{restaurant.cuisine} - #{restaurant.borough}
+   h3=restaurant.name
+      p #{restaurant.restaurant_id}, #{restaurant.street}
+      p #{restaurant.cuisine} - #{restaurant.borough}   
+   
+   iframe(width='50%', height='450', frameborder='0', style='border:0', src='https://www.google.com/maps/embed/v1/view?key=AIzaSyCq_whtUcTMBUvZpUj7sxtYuIluemFlubQ\
+      &center=' + restaurant.address.coord[1] + ',' +restaurant.address.coord[0]+ '&zoom=18')
+         
+   ul 
+      for data in restaurant.grades
+         li #{data.score},  grade : #{data.grade} - (#{data.date})
 
-  ul 
-    for data in restaurant.grades
-      li #{data.score},  grade : #{data.grade} - (#{data.date})
-  p Average : 
-
-  form(method="post", action="")
-    input(type='text', name='author', placeholder='Votre nom')
-    br
-    textarea(type='text', name='content', placeholder='Rentrez votre commentaire ici')
-    br
-    input(type='submit', value='Valider')
+   form(method="post", action="")
+      input(type='text', name='author', placeholder='Votre nom')
+      br
+      textarea(type='text', name='content', placeholder='Rentrez votre commentaire ici')
+      br
+      input(type='submit', value='Valider')
+      
+      
+    
+   

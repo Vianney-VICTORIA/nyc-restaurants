@@ -18,7 +18,6 @@ router.get('/', function(req, res, next) {
   Restaurants.findRestaurant(thisPage, boroughFilter, cuisineFilter)
   .then((results, cuisineFilter, boroughFilter) => {
     restaurants = results;
-    console.log(restaurants);
     return Restaurants.byBorough().exec();
   }).then((results) => {
     boroughs = results;
@@ -32,25 +31,50 @@ router.get('/', function(req, res, next) {
 
 router.get('/view/:id', function(req, res) {
 	var id = req.params.id;
-    Restaurants.findOne({"restaurant_id": id}).exec().then((restaurant) => {
-    console.log(restaurant);
-    _.each(restaurant.grades, (data) => data.date = moment(data.date).format('DD/MM/YYYY'))
+    Restaurants
+      .findOne({"restaurant_id": id})
+      .populate('comments')
+      .then((restaurant) => {
+         console.log(restaurant);
+    _.each(restaurant.grades, (data) => data.date = moment(data.date).format('DD/MM/YYYY'));
     res.render('restaurant/index', {restaurant});
   });
 });
 
 
-router.post('/view/:id', function(req, res) {
-    Comments.create({content : {
-                       "author": req.body.author, 
-                       "text": req.body.content,
-                       "date": moment().format('DD/MM/YYYY')
-                     },
-                     id_restaurant: req.params.id
-                   }).then(() => {
-    console.log(req.params.id);
-    res.redirect('/restaurant/index');
-  });
-});
+
+
+
+router.post('/view/:restaurant_id', function(req,res){
+	Restaurants
+		.findOne({ restaurant_id: req.params.restaurant_id})
+		.then((restaurant) => {
+			const commentToCreate = Object.assign({},req.body,{restaurant})
+			return Comments.create(commentToCreate,(err, comment) => {
+							if(err) console.log('ERROR :', err)
+						});
+		})
+		.then((comment) => {
+			// Need to find a proper way to return the updated restaurant
+			Restaurants
+				.update(
+				  { restaurant_id: req.params.restaurant_id},
+				  { $push:{ "comments": comment._id}},
+				  { upsert:true }
+				 )
+				.exec()
+			Restaurants
+				.findOne({ restaurant_id: req.params.restaurant_id})
+				.populate('comments')
+				.then(
+					(restaurant) => res.render('restaurant/index', {restaurant}),
+					(err) => console.log(err)
+				);
+		})
+})
+
+
+
+
 
 module.exports = router;
