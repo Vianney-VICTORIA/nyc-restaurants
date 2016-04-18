@@ -19,8 +19,67 @@ block content
 
   div 
     ul 
-      each restaurant in restaurants
+      - var i = parseInt(restaurants.page, 10) *10-10
+      each restaurant in restaurants.docs
         a(href='/restaurants/view/#{restaurant.restaurant_id}')
           li=restaurant.name 
 
-    
+  span(style="float: right")  
+
+ 
+  - var current_page = parseInt(restaurants.page, 10)
+      - var next = parseInt(1, 10)
+      div(class='pagination center-block text-center')
+        - var pageCuisine
+        if cuisineFilter
+          if thisPage
+            - pageCuisine = "&cuisine=" + cuisineFilter
+          else 
+            - pageCuisine = "&borough=" + boroughFilter
+        else
+          - pageCuisine = ''
+        - var pageBorough
+        if boroughFilter
+          if thisPage
+            - pageBorough = "&borough=" + boroughFilter
+          else
+            - pageBorough = "?borough=" + boroughFilter
+        else
+          - pageBorough = ''
+        if current_page != 1
+          a(href='/restaurants?p=1' + pageCuisine + pageBorough role="button" class="button first")= 'First'
+          a(href='/restaurants?p=' + (current_page-parseInt(1, 10)) + pageCuisine + pageBorough role="button" class="button")= 'Previous'
+        else
+          a(role="button" class="button first")= 'First'
+          a(role="button" class="button")= 'Previous'
+        if current_page > 6
+          a(role="button" class="button")= '...'
+        if current_page > 5
+          a(href='/restaurants?p=' + (current_page-parseInt(5, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page-parseInt(5, 10))
+        if current_page > 4
+          a(href='/restaurants?p=' + (current_page-parseInt(4, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page-parseInt(4, 10))
+        if current_page > 3
+          a(href='/restaurants?p=' + (current_page-parseInt(3, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page-parseInt(3, 10))
+        if current_page > 2
+          a(href='/restaurants?p=' + (current_page-parseInt(2, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page-parseInt(2, 10))
+        if current_page > 1
+          a(href='/restaurants?p=' + (current_page-parseInt(1, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page-parseInt(1, 10))
+        a(href='/restaurants?p=' + (current_page + pageCuisine + pageBorough), style='color: black' role="button" class="button")= (current_page)
+        if restaurants.pages >= (current_page+parseInt(1, 10))
+          a(href='/restaurants?p=' + (current_page+parseInt(1, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page+parseInt(1, 10))
+        if restaurants.pages >= (current_page+parseInt(2, 10))
+          a(href='/restaurants?p=' + (current_page+parseInt(2, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page+parseInt(2, 10))
+        if restaurants.pages >= (current_page+parseInt(3, 10))
+          a(href='/restaurants?p=' + (current_page+parseInt(3, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page+parseInt(3, 10))
+        if restaurants.pages >= (current_page+parseInt(4, 10))
+          a(href='/restaurants?p=' + (current_page+parseInt(4, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page+parseInt(4, 10))
+        if restaurants.pages >= (current_page+parseInt(5, 10))
+          a(href='/restaurants?p=' + (current_page+parseInt(5, 10)) + pageCuisine + pageBorough role="button" class="button")= (current_page+parseInt(5, 10))
+        if current_page > 6 && current_page < 2516
+          a(role="button" class="button")= '...'
+        if current_page != restaurants.pages
+          a(href='/restaurants?p=' + (current_page+parseInt(1, 10)) + pageCuisine + pageBorough role="button" class="button")= 'Next'
+          a(href='/restaurants?p=' + restaurants.pages + pageCuisine + pageBorough role="button" class="button last")= 'Last'
+        else
+          a(role="button" class="button")= 'Next'
+          a(role="button" class="button last")= 'Last'

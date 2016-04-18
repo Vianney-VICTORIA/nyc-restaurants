@@ -4,6 +4,7 @@ var Restaurants = require('../models/restaurants');
 var Comments = require('../models/comments');
 var app = express();
 var moment = require('moment');
+var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
 
@@ -31,8 +32,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/view/:id', function(req, res) {
 	var id = req.params.id;
-  Restaurants.findOne({"restaurant_id": id}).exec().then((restaurant) => {
+    Restaurants.findOne({"restaurant_id": id}).exec().then((restaurant) => {
     console.log(restaurant);
+    _.each(restaurant.grades, (data) => data.date = moment(data.date).format('DD/MM/YYYY'))
     res.render('restaurant/index', {restaurant});
   });
 });
