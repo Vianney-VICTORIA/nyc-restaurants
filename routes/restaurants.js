@@ -49,8 +49,8 @@ router.post('/view/:restaurant_id', function(req,res){
 	Restaurants
 		.findOne({ restaurant_id: req.params.restaurant_id})
 		.then((restaurant) => {
-			const commentToCreate = Object.assign({},req.body,{restaurant})
-			return Comments.create(commentToCreate,(err, comment) => {
+			const commentform = Object.assign({},req.body,{restaurant})
+			return Comments.create(commentform,(err, comment) => {
 							if(err) console.log('ERROR :', err)
 						});
 		})
@@ -70,8 +70,8 @@ router.post('/view/:restaurant_id', function(req,res){
 					(restaurant) => res.render('restaurant/index', {restaurant}),
 					(err) => console.log(err)
 				);
-		})
-})
+		});
+});
 
 
 
