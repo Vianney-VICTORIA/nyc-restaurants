@@ -107,10 +107,6 @@ img.bg {
   left: 0;
 }
 
-body {
-  margin-top: 5%;
-}
-
 @media screen and (max-width: 1024px) { /* Specific to this particular image */
   img.bg {
     left: 50%;

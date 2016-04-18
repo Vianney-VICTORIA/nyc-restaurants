@@ -1,36 +1,31 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
+
 const RestaurantsSchema = new mongoose.Schema({
-      address: [{
-         coord: [
-           { type: Number, default: ''},
-           { type: Number, default: '' }
-         ],
+      adress: [{
+         coord: [],
          street: { type : String, default : '', trim : true },
          zipcode: { type : String, default : '', trim : true },
+      }],
+      comments: [{
+         text: { type : String, default : '', trim : true },
       }],
       borough: { type : String, default : '', trim : true },
       cuisine: { type : String, default : '', trim : true },
       grades: [{
          date: { type : Date, default : Date.now },
          grade: { type : String, default : '', trim : true },
-         score: { type : Number, default : '', trim : true},
+         score: { type : Number, default : '' }
       }],
       name: { type : String, default : '', trim : true },
       restaurant_id: { type : String, default : '', trim : true },
 });
 
-RestaurantsSchema.plugin(mongoosePaginate);
 
-RestaurantsSchema.statics.findRestaurant = function(thisPage, boroughFilter, cuisineFilter) {
-
-   query = {name: {"$ne": ""}};
-
-   if (cuisineFilter) query = {name: {"$ne": ""}, "cuisine": cuisineFilter};
-   if (boroughFilter) query = {name: {"$ne": ""}, "borough": boroughFilter};
-   if (boroughFilter && cuisineFilter) query = {name: {"$ne": ""}, "borough": boroughFilter, "cuisine": cuisineFilter};
-
-   return this.paginate(query, {limit: 10, sort: "name", page: thisPage});
+RestaurantsSchema.statics.findRestaurant = function(cuisine = null, borough = null) {
+   var query = { name: {"$ne": ""} };
+      if(cuisine) query.cuisine = cuisine;
+      if(borough) query.borough = borough;
+   return this.find(query).limit(10).sort({name: 1});
 };
 
 RestaurantsSchema.statics.byBorough = function() {
