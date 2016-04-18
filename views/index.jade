@@ -15,10 +15,12 @@ block content
         p The top 10 of our restaurants
       ul
         each data in datas
-          li.li-restaurants
-            p.list-restaurants
-              =data.name 
-            p.list-restaurants
-              =data.cuisine
-            p.list-restaurants
-              =data.grades
+          a(href='/restaurants/view/#{data._id.restaurant_id}')
+            li.li-restaurants
+              p.list-restaurants
+                =data._id.name 
+                p.list-restaurants
+                =data._id.cuisine
+                  span : 
+                  =data.average
+                  
