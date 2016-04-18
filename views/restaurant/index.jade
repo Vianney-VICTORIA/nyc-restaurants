@@ -26,6 +26,9 @@ block content
       div.row
          div.col-xs-8
             h2 Les Anciens Commentaires
+            for data in restaurant.comments
+               li Nigga : #{data.author} le "#{data.date}"
+                  p punchline:
          
       div.row
          div.col-xs-8

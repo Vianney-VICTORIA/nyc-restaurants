@@ -9,14 +9,16 @@ var Restaurants = require('../models/restaurants');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Restaurants.aggregate([{$unwind: '$grades'},
-  						 {$group : { 
+  						 {$group : {
                          _id: {
                              name:'$name',
-                             cuisine:'$cuisine', 
-                             restaurant_id: '$restaurant_id'
+                             cuisine:'$cuisine',
+                             restaurant_id: '$restaurant_id',
+                             comments: '$comments',
                          }, average: {$avg : '$grades.score'}}}
                          ]).limit(10).sort("-average").exec().then((datas) => {
   	console.log(datas);
+
   	res.render('index', {datas});
   });
 });
